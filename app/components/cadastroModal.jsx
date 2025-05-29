@@ -6,6 +6,7 @@ import { SUPABASE_URL, supabaseHeaders } from '../../lib/supabase';
 export default function CadastroModal({ onSave }) {
   const [form, setForm] = useState({});
   const [redes, setRedes] = useState([]);
+  const [tipoCelula, setTipoCelula] = useState([]);
   const [cepError, setCepError] = useState('');
 
   useEffect(() => {
@@ -14,6 +15,15 @@ export default function CadastroModal({ onSave }) {
       .then(data => {
         const redesOrdenadas = data.sort((a, b) => a.id - b.id);
         setRedes(redesOrdenadas);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch(`${SUPABASE_URL}/rest/v1/tipoCelulas?select=*`, { headers: supabaseHeaders })
+      .then(res => res.json())
+      .then(data => {
+        const tipoCelulasOrdenadas = data.sort((a, b) => a.id - b.id);
+        setTipoCelula(tipoCelulasOrdenadas);
       });
   }, []);
 
@@ -113,6 +123,15 @@ export default function CadastroModal({ onSave }) {
                 <select className="form-select" id="id_rede" onChange={handleChange} value={form.id_rede || ''}>
                   <option value="">Selecione</option>
                   {redes.map(r => (
+                    <option key={r.id} value={r.id}>{r.descricao}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="tipoCelula" className="form-label">Tipo Célula</label>
+                <select className="form-select" id="id_tipoCelula" onChange={handleChange} value={form.id_tipoCelula || ''}>
+                  <option value="">Selecione</option>
+                  {tipoCelula.map(r => (
                     <option key={r.id} value={r.id}>{r.descricao}</option>
                   ))}
                 </select>

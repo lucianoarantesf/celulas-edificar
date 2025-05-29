@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { SUPABASE_URL, supabaseHeaders } from "../../lib/supabase";
+import "../globals.css";
 
 export default function CelulasTable({ onEdit }) {
   const [celulas, setCelulas] = useState([]);
@@ -62,7 +63,7 @@ export default function CelulasTable({ onEdit }) {
     <>
       <div className="d-flex justify-content-between mb-3 flex-wrap gap-2">
         <input
-          className="form-control"
+          className="form-control text-uppercase"
           style={{ minWidth: "200px" }}
           placeholder="Pesquisar..."
           value={busca}
@@ -71,28 +72,32 @@ export default function CelulasTable({ onEdit }) {
             setCurrentPage(1);
           }}
         />
-        <select
-          className="form-select"
-          style={{ width: "auto" }}
-          value={itemsPerPage}
-          onChange={(e) => {
-            setItemsPerPage(Number(e.target.value));
-            setCurrentPage(1);
-          }}
-        >
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="25">25</option>
-          <option value="50">50</option>
-        </select>
+        <div className="d-flex align-items-center">
+          <label className="me-2">Itens por página:</label>
+          <select
+            className="form-select"
+            style={{ width: "auto" }}
+            value={itemsPerPage}
+            onChange={(e) => {
+              setItemsPerPage(Number(e.target.value));
+              setCurrentPage(1);
+            }}
+          >
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+          </select>
+        </div>
       </div>
 
-      <div className="able-responsive-xl">
-        <table className="table table-bordered">
+      <div className="table-responsive-xl">
+        <table className="table table-bordered text-uppercase">
           <thead className="thead-dark">
             <tr>
               {[
                 { key: "id_rede", label: "Rede" },
+                { key: "id_tipoCelula", label: "Tipo Célula" },
                 { key: "nomeCelula", label: "Nome" },
                 { key: "nomeAnfitriao", label: "Anfitrião" },
                 { key: "contatoAnfitriao", label: "Contato Anfitrião" },
@@ -106,14 +111,14 @@ export default function CelulasTable({ onEdit }) {
                 { key: "cidade", label: "Cidade" },
                 { key: "uf", label: "Estado" }
               ].map((col) => (
-                <th 
-                  scope="col" 
+                <th
+                  scope="col"
                   className="text-center"
                   key={col.key}
                   onClick={() => handleSort(col.key)}
                   style={{ cursor: "pointer" }}
                 >
-                  {col.label} {renderSortIcon(col.key)}    
+                  {col.label} {renderSortIcon(col.key)}
                 </th>
               ))}
             </tr>
@@ -123,6 +128,15 @@ export default function CelulasTable({ onEdit }) {
               <tr key={c.id}>
                 <td className="text-center">
                   {c.id_rede === 6 ? "REDE Radicais Livres" : `REDE ${c.id_rede}`}
+                </td>
+                <td className="text-center">
+                  {c.id_tipoCelula === 1
+                    ? "ADULTOS"
+                    : c.id_tipoCelula === 2
+                    ? "ADULTOS/KIDS"
+                    : c.id_tipoCelula === 3
+                    ? "KIDS"
+                    : `RADICAIS LIVRES`}
                 </td>
                 <td>{c.nomeCelula}</td>
                 <td>{c.nomeAnfitriao}</td>
@@ -173,6 +187,7 @@ export default function CelulasTable({ onEdit }) {
           </li>
         </ul>
       </nav>
+
     </>
   );
 }

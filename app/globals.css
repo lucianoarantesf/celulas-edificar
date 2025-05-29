@@ -1,0 +1,7 @@
+/* Leaflet CSS */
+@import url('https://unpkg.com/leaflet@1.9.3/dist/leaflet.css');
+
+
+.table-uppercase * {
+  text-transform: uppercase;
+}
