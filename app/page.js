@@ -1,9 +1,14 @@
 "use client";
+<<<<<<< HEAD
 
 import CadastroModal from "./components/cadastroModal";
 import CelulasTable from "./components/celulasTable";
 //import CelulasMap from "./components/mapCelulas";
 
+=======
+import CelulasTable from './components/celulasTable';
+import CadastroModal from './components/cadastroModal';
+>>>>>>> 59f25040b0cf4e26fbb4a6fc188aabc61b9078c0
 
 
 export default function Home() {
