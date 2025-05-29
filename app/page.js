@@ -1,6 +1,6 @@
 "use client";
-import CelulasTable from './components/CelulasTable';
-import CadastroModal from './components/CadastroModal';
+import CelulasTable from './components/celulasTable';
+import CadastroModal from './components/cadastroModal';
 
 
 export default function Home() {
